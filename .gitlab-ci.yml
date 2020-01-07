@@ -1,0 +1,46 @@
+image: registry.gitlab.com/fravega-it/arquitectura/gitlab-runner-fvg:latest
+
+services:
+  - docker:18.09-dind
+
+before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
+
+stages:
+  - build
+  - deployment
+
+variables:
+  DOCKER_HOST: tcp://localhost:2375
+  DOCKER_DRIVER: overlay2
+  IMG_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+
+build-management:
+  image: registry.gitlab.com/fravega-it/arquitectura/gitlab-runner-fvg:latest
+  stage: build
+  only:
+     - master
+     - merge_requests
+  script:
+    - docker build -t $IMG_NAME .
+    - docker push $IMG_NAME
+  tags:
+    - kubernetes
+
+deployment-management:
+  image: registry.gitlab.com/fravega-it/arquitectura/gitlab-runner-fvg:latest
+  stage: deployment
+  when: manual
+  only:
+    - master
+    - merge_requests
+  except:
+    - branches
+  script:
+    - kubetpl render deploy/deploy.template.yml -i deploy/env/prod.env -s IMG_NAME=$IMG_NAME -s ENVIRONMENT=production --syntax=$ -o deploy.management.yaml
+  artifacts:
+    expire_in: 6 mos
+    paths:
+      - deploy.management.yaml
+  tags:
+    - management
