@@ -1,0 +1,12 @@
+.vscode/
+.idea/
+.git/
+doc/
+spec/
+data/
+deploy/
+*.md
+*.yaml
+*.yml
+.gitignore
+src/src
