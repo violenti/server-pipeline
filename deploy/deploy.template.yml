@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    app: $METADATA_NAME
+  name: $METADATA_NAME
+  namespace: $NAMESPACE
+
+spec:
+  progressDeadlineSeconds: 600
+  replicas: $REPLICAS
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: $METADATA_NAME
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: $METADATA_NAME
+      name: $METADATA_NAME
+    spec:
+      containers:
+      - image: $IMG_NAME
+        imagePullPolicy: IfNotPresent
+        name: $METADATA_NAME
+        ports:
+        - containerPort: $PORT
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu:  $CPU_LIMIT
+            memory: $MEMORY_LIMIT
+          requests:
+            cpu: $CPU_REQUEST
+            memory: $MEMORY_REQUEST
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: $REGISTRY
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
