@@ -1,10 +1,12 @@
-FROM registry.gitlab.com/fravega-it/arquitectura/godocker:1.13.3 AS build
+FROM golang:1.16.4-alpine3.13 AS build
 
 WORKDIR /app
 
-COPY main.go ./
+COPY . ./
 #RUN go get -u github.com/gorilla/mux  &&  CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o /server-pipeline
-RUN go mod download  && CGO_ENABLED=0  GOOS=linux go build -a -installsuffix cgo -ldflags '-extldfl'
+RUN go mod download  
+RUN go get -u github.com/gorilla/mux  &&  CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o /server-pipeline
+
 
 # final stage
 #FROM scratch AS runtime
