@@ -1,5 +1,3 @@
-[![MIT License][license-shield]][license-url]
-
 # Server pipeline
 
 <!-- PROJECT LOGO -->
