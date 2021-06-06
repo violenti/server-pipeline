@@ -37,7 +37,7 @@ docker run violenti/server-pipeline:latest -e GITLAB_TOKEN=djkfjdkfjdkjd -e GITL
 
 ## Kubernetes 
 
-You can do use of the manifest that find on kubernetes folder. 
+You could do use of the manifest that find on kubernetes folder. 
 
 ## Usage
 
@@ -51,6 +51,8 @@ url/development/filename.yml
 ```
 
 Where url is the domain name of the app. And  master or development is the branch name.  
+
+Inside of your gitlab-ci-yml, you have that used ``` include ``` , for more information check the official documentation of gitlab https://docs.gitlab.com/ee/ci/yaml/includes.html
 
 
 # Contributing
