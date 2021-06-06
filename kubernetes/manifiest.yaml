@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-pipeline
+  labels:
+    app: server-pipeline
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server-pipeline
+  template:
+    metadata:
+      labels:
+        app: server-pipeline
+    spec:
+      containers:
+      - name: server-pipeline
+        image: violenti/server-pipeline:latest
+        ports:
+        - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-pipeline
+spec:
+  selector:
+    app: server-pipeline
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000        
+---     
+ 
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: server-pipeline
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: server-pipeline
+            port:
+              number: 8000
