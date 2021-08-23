@@ -13,8 +13,7 @@ import (
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/master/{file}", route.Master).Methods("GET")
-	r.HandleFunc("/development/{file}", route.Development).Methods("GET")
+	r.HandleFunc("/{branch}/{file}", route.Branch).Methods("GET")
 	http.Handle("/", r)
 
 	srv := &http.Server{
