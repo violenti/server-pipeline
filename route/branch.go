@@ -21,7 +21,6 @@ func Branch(w http.ResponseWriter, r *http.Request) {
 
 	log.SetOutput(os.Stdout)
 	log.SetFormatter(&log.JSONFormatter{})
-	//log.SetLevel(log.DebugLevel)
 
 
 	resp, err := http.Get(FULL_URI)
@@ -37,7 +36,7 @@ func Branch(w http.ResponseWriter, r *http.Request) {
 			os.Exit(1)
 		}
 		fmt.Fprint(w, string(contents))
-		log.Printf(FULL_URI)
+		log.Printf(FILE)
 
 	}
 }
