@@ -6,7 +6,7 @@ import (
 	"time"
   "github.com/violenti/server-pipeline/route"
 	"github.com/gorilla/mux"
-	
+
 )
 
 //var GITLAB_TOKEN = os.Getenv("GITLAB_TOKEN")
@@ -15,6 +15,7 @@ import (
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/{branch}/{file}", route.Branch).Methods("GET")
+	r.HandleFunc("/heath", route.Health).Methods("GET")
 	http.Handle("/", r)
 
 	srv := &http.Server{
