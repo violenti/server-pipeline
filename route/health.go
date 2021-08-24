@@ -1,13 +1,17 @@
 package route
 
 import (
-	"fmt"
+  "os"
 	"net/http"
+  log "github.com/sirupsen/logrus"
 )
 
 
 func Health(w http.ResponseWriter, r *http.Request)  {
 
-  fmt.Printf("ok")
+  log.SetOutput(os.Stdout)
+	log.SetFormatter(&log.JSONFormatter{})
+  
+  log.Printf("ok")
 
 }

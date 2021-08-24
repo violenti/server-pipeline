@@ -9,13 +9,12 @@ import (
 
 )
 
-//var GITLAB_TOKEN = os.Getenv("GITLAB_TOKEN")
-//var URI = os.Getenv("GITLAB")
+
 
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/{branch}/{file}", route.Branch).Methods("GET")
-	r.HandleFunc("/heath", route.Health).Methods("GET")
+	r.HandleFunc("/health", route.Health).Methods("GET")
 	http.Handle("/", r)
 
 	srv := &http.Server{
