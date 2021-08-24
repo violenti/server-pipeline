@@ -10,16 +10,16 @@
 
 
 
-This is app for sharing your .gitlab-ci.yml, for multi projects. 
+This is app for sharing your .gitlab-ci.yml, for multi projects.
 
 
 # Installation
 
-## Develoment enverioment 
+## Develoment enverioment
 
 ```bash
-export GITLAB_TOKEN=djkfjdkfjdkjd
-export GITLAB=https://gitlab.com/api/v4/projects/9927708/repository/files/
+export GITLAB_TOKEN=foo
+export GITLAB=https://gitlab.com/api/v4/projects/13121312/repository/files/
 
 ```
 
@@ -32,23 +32,20 @@ go run main.go
 ## Docker
 
 ```bash
-docker run violenti/server-pipeline:latest -e GITLAB_TOKEN=djkfjdkfjdkjd -e GITLAB=https://gitlab.com/api/v4/projects/9927708/repository/files/
+docker run -d -it -p 8000:8000 violenti/server-pipeline:latest -e GITLAB_TOKEN=foo -e GITLAB=https://gitlab.com/api/v4/projects/13121312/repository/files/
 ```
 
-## Kubernetes 
+## Kubernetes
 
-You could do use of the manifest that find on kubernetes folder. 
+You could do use of the manifest that find on kubernetes folder.
 
 ## Usage
 
 ```html
-url/master/filename.yml 
-```
-or 
+url/{branch}/filename.yml
 
-```html
-url/development/filename.yml
 ```
+
 
 Where url is the domain name of the app. And  master or development is the branch name.  
 
